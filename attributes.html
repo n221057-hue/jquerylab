@@ -2,8 +2,7 @@
 
 <html>
 <head>
-
-<title>jQuery Attributes</title>
+<title>jQuery Attributes Example</title>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -11,27 +10,95 @@
 
 $(document).ready(function(){
 
-$("#btn").click(function(){
+// Set attribute
+$("#setAttr").click(function(){
+$("#img").attr("src","biolink (1).svg");
+});
 
-$("#img").attr("src","https://via.placeholder.com/200");
+// Get attribute
+$("#getAttr").click(function(){
+alert($("#img").attr("src"));
+});
 
+// Remove attribute
+$("#removeAttr").click(function(){
+$("#img").removeAttr("title");
+});
+
+// Get input value
+$("#getVal").click(function(){
+alert($("#name").val());
+});
+
+// Set input value
+$("#setVal").click(function(){
+$("#name").val("Student Name");
+});
+
+// Change text
+$("#changeText").click(function(){
+$("#text").text("Text changed using jQuery");
+});
+
+// Change HTML
+$("#changeHTML").click(function(){
+$("#html").html("<b>Bold text added</b>");
 });
 
 });
 
 </script>
 
+<style>
+
+body{
+font-family:Arial;
+text-align:center;
+}
+
+img{
+margin:10px;
+}
+
+button{
+margin:5px;
+padding:8px;
+}
+
+</style>
+
 </head>
 
 <body>
 
-<h2>Attribute Example</h2>
+<h2>jQuery Attributes Example</h2>
 
-<img id="img" src="C:\Users\sowmya\Downloads\imou.svg">
+<h3>Image Attribute</h3>
+
+<img id="img" src="asda.svg" title="Sample Image">
+
+<br>
+
+<button id="setAttr">Change Image</button> <button id="getAttr">Get Image Source</button> <button id="removeAttr">Remove Title</button>
+
+<hr>
+
+<h3>Input Value</h3>
+
+<input type="text" id="name" placeholder="Enter name">
 
 <br><br>
 
-<button id="btn">Change Image</button>
+<button id="getVal">Get Value</button> <button id="setVal">Set Value</button>
+
+<hr>
+
+<h3>Text and HTML</h3>
+
+<p id="text">Original Text</p>
+<p id="html">Original HTML</p>
+
+<button id="changeText">Change Text</button> <button id="changeHTML">Change HTML</button>
 
 </body>
 </html>
