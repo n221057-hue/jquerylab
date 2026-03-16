@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+<title>jQuery Traversing</title>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+
+$(document).ready(function(){
+
+$("#btn").click(function(){
+
+$("li").first().css("color","red");
+
+});
+
+});
+
+</script>
+
+</head>
+
+<body>
+
+<h2>Traversing Example</h2>
+
+<ul>
+<li>Item 1</li>
+<li>Item 2</li>
+<li>Item 3</li>
+</ul>
+
+<button id="btn">Highlight First Item</button>
+
+</body>
+</html>
