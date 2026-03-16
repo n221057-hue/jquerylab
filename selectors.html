@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+<title>jQuery Selectors</title>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+
+$(document).ready(function(){
+
+$("#btn1").click(function(){
+$("p").hide();
+});
+
+$("#btn2").click(function(){
+$(".test").hide();
+});
+
+});
+
+</script>
+
+</head>
+
+<body>
+
+<h2>Selectors Example</h2>
+
+<p>This is paragraph 1</p>
+<p class="test">This is paragraph 2</p>
+<p>This is paragraph 3</p>
+
+<button id="btn1">Hide All Paragraphs</button> <button id="btn2">Hide Class Paragraph</button>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+<title>jQuery Effects</title>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+
+$(document).ready(function(){
+
+$("#fadeBtn").click(function(){
+$("#box").fadeToggle();
+});
+
+$("#slideBtn").click(function(){
+$("#box").slideToggle();
+});
+
+});
+
+</script>
+
+</head>
+
+<body>
+
+<h2>Effects Example</h2>
+
+<button id="fadeBtn">Fade Toggle</button> <button id="slideBtn">Slide Toggle</button>
+
+<div id="box" style="width:200px;height:200px;background:red;">
+Box
+</div>
+
+</body>
+</html>
