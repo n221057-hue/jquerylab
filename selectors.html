@@ -1,166 +1,184 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>jQuery Lab | Selectors</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Simple jQuery Selectors</title>
+
+  <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <style>
+    .highlight {
+      background: yellow;
+    }
+
+    .box {
+      margin: 10px 0;
+    }
+  </style>
 </head>
 
 <body>
-  <div class="container">
-    <header>
-      <h1>Selectors Lab</h1>
-      <p class="subtitle">Master jQuery selector patterns for DOM targeting</p>
-    </header>
 
-    <nav>
-      <a href="index.html">Dashboard</a>
-      <a href="selectors.html" class="active">Selectors</a>
-      <a href="attributes.html">Attributes</a>
-      <a href="events.html">Events</a>
-      <a href="style.html">Style</a>
-      <a href="traversing.html">Traversing</a>
-      <a href="effects.html">Effects</a>
-    </nav>
+<h2>1. Basic Selectors</h2>
+<p id="firstP">Paragraph 1 (ID)</p>
+<p class="testClass">Paragraph 2 (Class)</p>
+<span>Span Element</span>
 
-    <div class="grid">
-      <!-- Basic Selectors -->
-      <div class="card">
-        <h3>1. Basic Selectors</h3>
-        <p>Target by ID, Class, and Tag Name.</p>
-        <div class="demo-area" id="basicDemo">
-          <p id="firstP">Paragraph 1 (ID: #firstP)</p>
-          <p class="testClass">Paragraph 2 (Class: .testClass)</p>
-          <span>Span Element (Tag: span)</span>
-        </div>
-        <button id="btnID">Select #firstP</button>
-        <button id="btnClass" class="secondary">Select .testClass</button>
-        <button id="btnTag" class="secondary">Select span</button>
-      </div>
+<br>
+<button id="idBtn">Select ID</button>
+<button id="classBtn">Select Class</button>
+<button id="tagBtn">Select Tag</button>
 
-      <!-- Hierarchy Selectors -->
-      <div class="card">
-        <h3>2. Hierarchy Selectors</h3>
-        <p>Target children, descendants, and siblings.</p>
-        <div class="demo-area" id="hierDemo">
-          <ul id="parentUl">
-            <li>Item 1 (Direct Child)</li>
-            <li>Item 2 (Direct Child)</li>
-            <li class="middle">Item 3 (Middle)
-              <ul>
-                <li>Nested Item (Descendant)</li>
-              </ul>
-            </li>
-            <li>Item 4 (Direct Child)</li>
-          </ul>
-        </div>
-        <button id="btnDirect">Direct Children</button>
-        <button id="btnDesc" class="secondary">All Descendants</button>
-        <button id="btnSib" class="secondary">Siblings of Middle</button>
-      </div>
+<hr>
 
-      <!-- Attribute Selectors -->
-      <div class="card">
-        <h3>3. Attribute Selectors</h3>
-        <p>Target elements based on their HTML attributes.</p>
-        <div class="demo-area" id="attrDemo">
-          <input type="text" name="user-name" value="User Name"
-            style="width: 80%; border: 1px solid var(--border-color);">
-          <input type="password" name="user-pass" value="Password"
-            style="width: 80%; border: 1px solid var(--border-color);">
-          <a href="https://jquery.com" target="_blank" style="margin-top: 5px; color: var(--accent-primary);">jQuery
-            Official Site</a>
-        </div>
-        <button id="btnAttrEx">Exactly name='user-name'</button>
-        <button id="btnAttrStarts" class="secondary">Starts with 'user-'</button>
-        <button id="btnAttrEnds" class="secondary">Ends with 'pass'</button>
-      </div>
+<h2>2. Hierarchy Selectors</h2>
+<ul id="parent">
+  <li>Item 1</li>
+  <li>Item 2</li>
+  <li class="middle">Item 3
+    <ul>
+      <li>Nested Item</li>
+    </ul>
+  </li>
+  <li>Item 4</li>
+</ul>
 
-      <!-- Basic Filters -->
-      <div class="card">
-        <h3>4. Basic Filters</h3>
-        <p>Target specifically by position or index.</p>
-        <div class="demo-area" id="filterDemo">
-          <div class="row">Row 0 (First)</div>
-          <div class="row">Row 1 (Odd)</div>
-          <div class="row">Row 2 (Even)</div>
-          <div class="row">Row 3 (Odd)</div>
-          <div class="row">Row 4 (Last)</div>
-        </div>
-        <button id="btnFirst">First/Last</button>
-        <button id="btnEven" class="secondary">Even Rows</button>
-        <button id="btnOdd" class="secondary">Odd Rows</button>
-      </div>
+<button id="childBtn">Children</button>
+<button id="descBtn">Descendants</button>
+<button id="sibBtn">Siblings</button>
 
-      <!-- Visibility & Form Filters -->
-      <div class="card">
-        <h3>5. Visibility & Form</h3>
-        <p>Handle hidden elements and form types.</p>
-        <div class="demo-area" id="visDemo">
-          <p>This is visible</p>
-          <p style="display: none;">This was hidden</p>
-          <input type="text" placeholder="Visible Input" style="width: 80%;">
-          <input type="hidden" value="Secret">
-        </div>
-        <button id="btnVis">Show Hidden P</button>
-        <button id="btnInput" class="secondary">Select All Inputs</button>
-      </div>
-      <!-- Actions -->
-      <div class="card">
-        <h3>6. Control Actions</h3>
-        <p>Clear all highlights applied above.</p>
-        <button id="btnClear" class="danger" style="width: 100%;">Clear All Highlights</button>
-        <div class="code-block" id="selectorShowcase">
-          // Click a button to see the selector code here
-        </div>
-      </div>
-    </div>
-  </div>
+<hr>
 
-  <script>
-    function highlight(selector, code) {
-      $(".highlight").removeClass("highlight");
-      $(selector).addClass("highlight");
-      $("#selectorShowcase").text(code);
-    }
+<h2>3. Attribute Selectors</h2>
+<input type="text" name="user-name" value="Name"><br><br>
+<input type="password" name="user-pass" value="Password"><br><br>
 
-    $(document).ready(function () {
-      // 1. Basic
-      $("#btnID").click(function () { highlight("#firstP", '$("#firstP").addClass("highlight");'); });
-      $("#btnClass").click(function () { highlight(".testClass", '$(".testClass").addClass("highlight");'); });
-      $("#btnTag").click(function () { highlight("#basicDemo span", '$("span").addClass("highlight");'); });
+<button id="exactBtn">Exact</button>
+<button id="startBtn">Starts With</button>
+<button id="endBtn">Ends With</button>
 
-      // 2. Hierarchy
-      $("#btnDirect").click(function () { highlight("#parentUl > li", '$("#parentUl > li").addClass("highlight");'); });
-      $("#btnDesc").click(function () { highlight("#parentUl li", '$("#parentUl li").addClass("highlight");'); });
-      $("#btnSib").click(function () { highlight(".middle ~ li", '$(".middle ~ li").addClass("highlight");'); });
+<hr>
 
-      // 3. Attribute
-      $("#btnAttrEx").click(function () { highlight('input[name="user-name"]', '$(\'input[name="user-name"]\').addClass("highlight");'); });
-      $("#btnAttrStarts").click(function () { highlight('input[name^="user-"]', '$(\'input[name^="user-"]\').addClass("highlight");'); });
-      $("#btnAttrEnds").click(function () { highlight('input[name$="pass"]', '$(\'input[name$="pass"]\').addClass("highlight");'); });
+<h2>4. Filter Selectors</h2>
+<div id="rows">
+  <div>Row 0</div>
+  <div>Row 1</div>
+  <div>Row 2</div>
+  <div>Row 3</div>
+  <div>Row 4</div>
+</div>
 
-      // 4. Filters
-      $("#btnFirst").click(function () { highlight("#filterDemo div:first, #filterDemo div:last", '$("#filterDemo div:first, #filterDemo div:last").addClass("highlight");'); });
-      $("#btnEven").click(function () { highlight("#filterDemo div:even", '$("#filterDemo div:even").addClass("highlight");'); });
-      $("#btnOdd").click(function () { highlight("#filterDemo div:odd", '$("#filterDemo div:odd").addClass("highlight");'); });
+<button id="firstBtn">First & Last</button>
+<button id="evenBtn">Even</button>
+<button id="oddBtn">Odd</button>
 
-      // 5. Vis
-      $("#btnVis").click(function () {
-        $("#visDemo p:hidden").show().addClass("highlight");
-        $("#selectorShowcase").text('$("#visDemo p:hidden").show().addClass("highlight");');
-      });
-      $("#btnInput").click(function () { highlight("#visDemo :input", '$("#visDemo :input").addClass("highlight");'); });
+<hr>
 
-      $("#btnClear").click(function () {
-        $(".highlight").removeClass("highlight");
-        $("#selectorShowcase").text("// Highlights cleared.");
-      });
-    });
-  </script>
+<h2>5. Visibility & Form</h2>
+<p>Visible Paragraph</p>
+<p style="display:none;">Hidden Paragraph</p>
+
+<input type="text" placeholder="Visible Input">
+<input type="hidden" value="Secret">
+
+<br><br>
+<button id="showHidden">Show Hidden</button>
+<button id="inputBtn">Select Inputs</button>
+
+<hr>
+
+<button id="clear">Clear All</button>
+
+<script>
+
+function clearAll(){
+  $(".highlight").removeClass("highlight");
+}
+
+$(document).ready(function(){
+
+  // 1. Basic
+  $("#idBtn").click(function(){
+    clearAll();
+    $("#firstP").addClass("highlight");
+  });
+
+  $("#classBtn").click(function(){
+    clearAll();
+    $(".testClass").addClass("highlight");
+  });
+
+  $("#tagBtn").click(function(){
+    clearAll();
+    $("span").addClass("highlight");
+  });
+
+  // 2. Hierarchy
+  $("#childBtn").click(function(){
+    clearAll();
+    $("#parent > li").addClass("highlight");
+  });
+
+  $("#descBtn").click(function(){
+    clearAll();
+    $("#parent li").addClass("highlight");
+  });
+
+  $("#sibBtn").click(function(){
+    clearAll();
+    $(".middle ~ li").addClass("highlight");
+  });
+
+  // 3. Attribute
+  $("#exactBtn").click(function(){
+    clearAll();
+    $('input[name="user-name"]').addClass("highlight");
+  });
+
+  $("#startBtn").click(function(){
+    clearAll();
+    $('input[name^="user-"]').addClass("highlight");
+  });
+
+  $("#endBtn").click(function(){
+    clearAll();
+    $('input[name$="pass"]').addClass("highlight");
+  });
+
+  // 4. Filters
+  $("#firstBtn").click(function(){
+    clearAll();
+    $("#rows div:first, #rows div:last").addClass("highlight");
+  });
+
+  $("#evenBtn").click(function(){
+    clearAll();
+    $("#rows div:even").addClass("highlight");
+  });
+
+  $("#oddBtn").click(function(){
+    clearAll();
+    $("#rows div:odd").addClass("highlight");
+  });
+
+  // 5. Visibility
+  $("#showHidden").click(function(){
+    $("p:hidden").show().addClass("highlight");
+  });
+
+  $("#inputBtn").click(function(){
+    clearAll();
+    $(":input").addClass("highlight");
+  });
+
+  // Clear
+  $("#clear").click(function(){
+    clearAll();
+  });
+
+});
+
+</script>
+
 </body>
-
 </html>

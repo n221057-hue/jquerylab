@@ -1,83 +1,159 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>jQuery Lab | Traversing</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Simple jQuery Traversing</title>
+
+  <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <style>
+    .highlight {
+      background: yellow;
+    }
+
+    .box {
+      width: 60px;
+      height: 60px;
+      margin: 5px;
+      display: inline-block;
+    }
+
+    .blue { background: blue; }
+    .red { background: red; }
+    .green { background: green; }
+
+    #log {
+      border: 1px solid black;
+      height: 120px;
+      overflow-y: auto;
+      margin-top: 10px;
+      padding: 5px;
+    }
+  </style>
 </head>
 
 <body>
-  <div class="container">
-    <header>
-      <h1>Traversing Lab</h1>
-      <p class="subtitle">Learning how to move around the HTML tree</p>
-    </header>
 
-    <nav>
-      <a href="index.html">Dashboard</a>
-      <a href="selectors.html">Selectors</a>
-      <a href="attributes.html">Attributes</a>
-      <a href="events.html">Events</a>
-      <a href="style.html">Style</a>
-      <a href="traversing.html" class="active">Traversing</a>
-      <a href="effects.html">Effects</a>
-    </nav>
-
-    <h3>5. Chain Navigation</h3>
-    <p>Complex traversal using method chaining.</p>
-    <div id="traversalLog" class="event-log">Highlighting trace...</div>
-    <button id="btnClear" class="secondary" style="width: 100%;">Clear Highlights</button>
-    <div class="code-block" id="traversalCode">// Traversal code will appear here</div>
+<h2>1. Parent / Parents</h2>
+<div id="grandparent">
+  Grandparent
+  <div id="parent">
+    Parent
+    <button id="childBtn">Child Button</button>
   </div>
-  </div>
-  </div>
+</div>
 
-  <script>
-    function trHighlight(selector, code) {
-      $(".highlight").removeClass("highlight");
-      $(selector).addClass("highlight");
-      $("#traversalCode").text(code);
-      $("#traversalLog").prepend("<div><span class='time'>[Log]</span> Applied " + code + "</div>");
-    }
+<button id="parentBtn">Parent</button>
+<button id="parentsBtn">Grandparent</button>
 
-    $(document).ready(function () {
-      // 1. Ancestors
-      $("#btnParent").click(function () { trHighlight("#targetBtn").parent(), '$("#targetBtn").parent().addClass("highlight");' });
-      // wait, logic error in above line, need to fix
-      $("#btnParent").click(function () { trHighlight($("#targetBtn").parent()), '$("#targetBtn").parent().addClass("highlight");' });
-      $("#btnParents").click(function () { trHighlight($("#targetBtn").parents("#grandparent")), '$("#targetBtn").parents("#grandparent").addClass("highlight");' });
+<hr>
 
-      // 2. Descendants
-      $("#btnChildren").click(function () { trHighlight($("#descDemo").children()), '$("#descDemo").children().addClass("highlight");' });
-      $("#btnFind").click(function () { trHighlight($("#descDemo").find(".badge")), '$("#descDemo").find(".badge").addClass("highlight");' });
+<h2>2. Children / Find</h2>
+<div id="descDemo">
+  <p>Text 1</p>
+  <p class="badge">Text 2</p>
+  <span class="badge">Text 3</span>
+</div>
 
-      // 3. Siblings
-      $("#btnNext").click(function () { trHighlight($("#sibDemo .middle").next()), '$(".middle").next().addClass("highlight");' });
-      $("#btnPrev").click(function () { trHighlight($("#sibDemo .middle").prev()), '$(".middle").prev().addClass("highlight");' });
-      $("#btnSiblings").click(function () { trHighlight($("#sibDemo .middle").siblings()), '$(".middle").siblings().addClass("highlight");' });
+<button id="childrenBtn">Children</button>
+<button id="findBtn">Find .badge</button>
 
-      // 4. Filtering
-      $("#btnEq").click(function () { trHighlight($("#filterDemo .box").eq(2)), '$(".box").eq(2).addClass("highlight");' });
-      $("#btnFilter").click(function () { trHighlight($("#filterDemo .box").filter(".blue")), '$(".box").filter(".blue").addClass("highlight");' });
-      $("#btnNot").click(function () { trHighlight($("#filterDemo .box").not(".blue")), '$(".box").not(".blue").addClass("highlight");' });
+<hr>
 
-      $("#btnClear").click(function () {
-        $(".highlight").removeClass("highlight");
-        $("#traversalCode").text("// Cleared.");
-      });
-    });
+<h2>3. Siblings</h2>
+<div id="sibDemo">
+  <div>One</div>
+  <div class="middle">Two</div>
+  <div>Three</div>
+</div>
 
-    // Redefining helper to handle jQuery object
-    function trHighlight($el, code) {
-      $(".highlight").removeClass("highlight");
-      $el.addClass("highlight");
-      $("#traversalCode").text(code);
-      $("#traversalLog").prepend("<div><span class='time'>[Log]</span> Applied " + code + "</div>");
-    }
-  </script>
+<button id="nextBtn">Next</button>
+<button id="prevBtn">Prev</button>
+<button id="siblingsBtn">All Siblings</button>
+
+<hr>
+
+<h2>4. Filtering</h2>
+<div id="filterDemo">
+  <div class="box red"></div>
+  <div class="box blue"></div>
+  <div class="box green"></div>
+  <div class="box blue"></div>
+</div>
+
+<button id="eqBtn">eq(2)</button>
+<button id="filterBtn">Only Blue</button>
+<button id="notBtn">Not Blue</button>
+
+<hr>
+
+<h2>Log</h2>
+<div id="log"></div>
+<button id="clear">Clear</button>
+
+<script>
+
+function highlight(el, text){
+  $(".highlight").removeClass("highlight");
+  el.addClass("highlight");
+  $("#log").prepend("<div>" + text + "</div>");
+}
+
+$(document).ready(function(){
+
+  // 1. Parent
+  $("#parentBtn").click(function(){
+    highlight($("#childBtn").parent(), "parent()");
+  });
+
+  $("#parentsBtn").click(function(){
+    highlight($("#childBtn").parents("#grandparent"), "parents()");
+  });
+
+  // 2. Children / Find
+  $("#childrenBtn").click(function(){
+    highlight($("#descDemo").children(), "children()");
+  });
+
+  $("#findBtn").click(function(){
+    highlight($("#descDemo").find(".badge"), "find(.badge)");
+  });
+
+  // 3. Siblings
+  $("#nextBtn").click(function(){
+    highlight($(".middle").next(), "next()");
+  });
+
+  $("#prevBtn").click(function(){
+    highlight($(".middle").prev(), "prev()");
+  });
+
+  $("#siblingsBtn").click(function(){
+    highlight($(".middle").siblings(), "siblings()");
+  });
+
+  // 4. Filtering
+  $("#eqBtn").click(function(){
+    highlight($("#filterDemo .box").eq(2), "eq(2)");
+  });
+
+  $("#filterBtn").click(function(){
+    highlight($("#filterDemo .box").filter(".blue"), "filter(.blue)");
+  });
+
+  $("#notBtn").click(function(){
+    highlight($("#filterDemo .box").not(".blue"), "not(.blue)");
+  });
+
+  // Clear
+  $("#clear").click(function(){
+    $(".highlight").removeClass("highlight");
+    $("#log").empty();
+  });
+
+});
+
+</script>
+
 </body>
-
 </html>

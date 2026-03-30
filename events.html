@@ -1,148 +1,188 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>jQuery Lab | Events</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Simple jQuery Events</title>
+
+  <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <style>
+    .box {
+      width: 100px;
+      height: 100px;
+      background: blue;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    #dynamicArea {
+      width: 200px;
+      height: 60px;
+      border: 1px dashed black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    #eventLogger {
+      border: 1px solid black;
+      height: 120px;
+      overflow-y: auto;
+      padding: 5px;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 
 <body>
-  <div class="container">
-    <header>
-      <h1> Events Lab</h1>
-      <p class="subtitle">Master jQuery user Interaction and event handling</p>
-    </header>
 
-    <nav>
-      <a href="index.html">Dashboard</a>
-      <a href="selectors.html">Selectors</a>
-      <a href="attributes.html">Attributes</a>
-      <a href="events.html" class="active">Events</a>
-      <a href="style.html">Style</a>
-      <a href="traversing.html">Traversing</a>
-      <a href="effects.html">Effects</a>
-    </nav>
+<h2>1. Mouse Events</h2>
+<div id="mouseBox" class="box">Click Me</div>
+<p id="mouseStatus">Status: Waiting</p>
 
-    <div class="grid">
-      <!-- Mouse Events -->
-      <div class="card">
-        <h3>1. Mouse Events</h3>
-        <p>Click, Double Click, MouseEnter, MouseLeave, and Hover.</p>
-        <div class="demo-area">
-          <div id="mouseBox"
-            style="width: 100px; height: 100px; background: var(--accent-primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
-            Action Me</div>
-        </div>
-        <p id="mouseStatus" style="font-size: 0.9rem; color: var(--accent-secondary);">Status: Waiting...</p>
-      </div>
+<hr>
 
-      <!-- Keyboard Events -->
-      <div class="card">
-        <h3>2. Keyboard Events</h3>
-        <p>KeyDown, KeyUp, KeyPress.</p>
-        <div class="demo-area">
-          <input type="text" id="keyboardInput" placeholder="Type something here..." style="width: 80%;">
-        </div>
-        <p id="keyboardStatus" style="font-size: 0.9rem; color: var(--accent-secondary);">Last Key: None</p>
-      </div>
+<h2>2. Keyboard Events</h2>
+<input type="text" id="keyboardInput" placeholder="Type here">
+<p id="keyboardStatus">Last Key: None</p>
 
-      <!-- Form Events -->
-      <div class="card">
-        <h3>3. Form Events</h3>
-        <p>Focus, Blur, Change, Submit.</p>
-        <div class="demo-area" style="padding: 1rem;">
-          <form id="demoForm" style="width: 100%;">
-            <input type="text" name="username" placeholder="Username (Focus/Blur/Change)"
-              style="width: 100%; margin-bottom: 0.5rem;">
-            <select name="country" style="width: 100%; margin-bottom: 0.5rem;">
-              <option value="">Select Country (Change)</option>
-              <option value="USA">USA</option>
-              <option value="India">India</option>
-            </select>
-            <button type="submit" style="width: 100%;">Submit Form</button>
-          </form>
-        </div>
-      </div>
+<hr>
 
-      <!-- on() and off() -->
-      <div class="card" style="grid-column: span 1;">
-        <h3>4. on() & off()</h3>
-        <p>The universal way to manage multiple events and dynamic elements.</p>
-        <div class="demo-area">
-          <div id="dynamicArea"
-            style="width: 100%; height: 60px; display: flex; align-items: center; justify-content: center; border: 1px dashed var(--border-color);">
-            Hover for status</div>
-        </div>
-        <button id="btnOn">Bind Events</button>
-        <button id="btnOff" class="danger">Unbind Events</button>
-      </div>
+<h2>3. Form Events</h2>
+<form id="form">
+  <input type="text" id="name" placeholder="Enter name"><br><br>
 
-      <!-- Live Log -->
-      <div class="card" style="grid-column: span 1;">
-        <h3>5. Event Logger</h3>
-        <p>Real-time log of events triggered above.</p>
-        <div id="eventLogger" class="event-log"></div>
-        <button id="btnClearLog" class="secondary" style="width: 100%; margin-top: 5px;">Clear Log</button>
-      </div>
-    </div>
-  </div>
+  <select id="country">
+    <option value="">Select Country</option>
+    <option value="India">India</option>
+    <option value="USA">USA</option>
+  </select><br><br>
 
-  <script>
-    function logEvent(msg) {
-      var time = new Date().toLocaleTimeString();
-      $("#eventLogger").prepend('<div class="log-entry"><span class="time">[' + time + ']</span> ' + msg + '</div>');
+  <button type="submit">Submit</button>
+</form>
+
+<hr>
+
+<h2>4. on() and off()</h2>
+<div id="dynamicArea">Hover here</div>
+
+<button id="onBtn">ON</button>
+<button id="offBtn">OFF</button>
+
+<hr>
+
+<h2>5. Event Logger</h2>
+<div id="eventLogger"></div>
+<button id="clearLog">Clear Log</button>
+
+<script>
+
+// function to log events
+function log(msg){
+  $("#eventLogger").prepend("<div>" + msg + "</div>");
+}
+
+$(document).ready(function(){
+
+  // 1. Mouse Events
+  $("#mouseBox").click(function(){
+    log("Clicked");
+  });
+
+  $("#mouseBox").dblclick(function(){
+    log("Double Clicked");
+  });
+
+  $("#mouseBox").mouseenter(function(){
+    $(this).css("background","green");
+    log("Mouse Enter");
+  });
+
+  $("#mouseBox").mouseleave(function(){
+    $(this).css("background","blue");
+    log("Mouse Leave");
+  });
+
+  $("#mouseBox").hover(
+    function(){
+      $("#mouseStatus").text("Hovering");
+    },
+    function(){
+      $("#mouseStatus").text("Not Hovering");
     }
+  );
 
-    $(document).ready(function () {
-      // 1. Mouse
-      $("#mouseBox").click(function () { logEvent("Single Clicked Mouse Box"); });
-      $("#mouseBox").dblclick(function () { logEvent("Double Clicked Mouse Box"); });
-      $("#mouseBox").mouseenter(function () { $(this).css("background", "#818cf8"); logEvent("MouseEnter Box"); });
-      $("#mouseBox").mouseleave(function () { $(this).css("background", "#38bdf8"); logEvent("MouseLeave Box"); });
-      $("#mouseBox").hover(
-        function () { $("#mouseStatus").text("Status: Hovering!"); },
-        function () { $("#mouseStatus").text("Status: Off!"); }
-      );
+  // 2. Keyboard Events
+  $("#keyboardInput").keydown(function(e){
+    log("KeyDown: " + e.key);
+  });
 
-      // 2. Keyboard
-      $("#keyboardInput").keydown(function (e) { logEvent("KeyDown: " + e.key); });
-      $("#keyboardInput").keyup(function (e) { logEvent("KeyUp: " + e.key); $("#keyboardStatus").text("Last Key: " + e.key); });
+  $("#keyboardInput").keyup(function(e){
+    $("#keyboardStatus").text("Last Key: " + e.key);
+  });
 
-      // 3. Form
-      $("#demoForm input[name='username']").focus(function () { $(this).css("border-color", "var(--accent-primary)"); logEvent("Input Focused"); });
-      $("#demoForm input[name='username']").blur(function () { $(this).css("border-color", "var(--border-color)"); logEvent("Input Blurred"); });
-      $("#demoForm input[name='username']").change(function () { logEvent("Input Changed value to: " + $(this).val()); });
+  // 3. Form Events
+  $("#name").focus(function(){
+    $(this).css("border","2px solid green");
+    log("Input Focus");
+  });
 
-      $("#demoForm select[name='country']").change(function () { logEvent("Selected Country: " + $(this).val()); });
+  $("#name").blur(function(){
+    $(this).css("border","1px solid black");
+    log("Input Blur");
+  });
 
-      $("#demoForm").submit(function (e) {
-        e.preventDefault();
-        logEvent("Form Submit Attempted (Prevented default)");
-        alert("Form submitted!");
-      });
+  $("#name").change(function(){
+    log("Changed: " + $(this).val());
+  });
 
-      // 4. On/Off
-      $("#btnOn").click(function () {
-        $("#dynamicArea").on({
-          mouseenter: function () { $(this).css("background", "rgba(0,100,0,0.5)").text("ON: Mouse In!"); logEvent("Multi: Enter"); },
-          mouseleave: function () { $(this).css("background", "transparent").text("ON: Mouse Out!"); logEvent("Multi: Leave"); },
-          click: function () { logEvent("Multi: Click"); alert("On() Click Triggered!"); }
-        });
-        alert("Events Bound Successfully!");
-      });
+  $("#country").change(function(){
+    log("Country: " + $(this).val());
+  });
 
-      $("#btnOff").click(function () {
-        $("#dynamicArea").off();
-        $("#dynamicArea").css("background", "transparent").text("OFF: Events Unbound");
-        alert("Events Unbound!");
-      });
+  $("#form").submit(function(e){
+    e.preventDefault();
+    alert("Form Submitted");
+    log("Form Submitted");
+  });
 
-      $("#btnClearLog").click(function () { $("#eventLogger").empty(); });
+  // 4. on() and off()
+  $("#onBtn").click(function(){
+    $("#dynamicArea").on({
+      mouseenter: function(){
+        $(this).css("background","lightgreen").text("Mouse In");
+        log("on(): Enter");
+      },
+      mouseleave: function(){
+        $(this).css("background","white").text("Mouse Out");
+        log("on(): Leave");
+      },
+      click: function(){
+        alert("Clicked using on()");
+        log("on(): Click");
+      }
     });
-  </script>
-</body>
+  });
 
+  $("#offBtn").click(function(){
+    $("#dynamicArea").off();
+    $("#dynamicArea").text("Events Removed").css("background","white");
+    log("Events Removed");
+  });
+
+  // 5. Clear Log
+  $("#clearLog").click(function(){
+    $("#eventLogger").empty();
+  });
+
+});
+
+</script>
+
+</body>
 </html>

@@ -1,161 +1,180 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>jQuery Lab | Style</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Simple jQuery Style</title>
+
+  <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <style>
+    .box {
+      width: 80px;
+      height: 80px;
+      margin: 10px 0;
+    }
+
+    #cssBox { background: blue; }
+    #dimBox {
+      width: 100px;
+      height: 100px;
+      background: green;
+      padding: 20px;
+      border: 5px solid black;
+    }
+
+    #parentBox {
+      width: 200px;
+      height: 100px;
+      background: gray;
+      position: relative;
+      margin-top: 10px;
+    }
+
+    #childBox {
+      width: 40px;
+      height: 40px;
+      background: orange;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+    }
+
+    #scrollBox {
+      width: 200px;
+      height: 100px;
+      overflow: scroll;
+      border: 1px solid black;
+    }
+
+    #bigContent {
+      width: 500px;
+      height: 500px;
+      background: lightblue;
+    }
+
+    #log {
+      border: 1px solid black;
+      height: 100px;
+      overflow-y: auto;
+      padding: 5px;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 
 <body>
-  <div class="container">
-    <header>
-      <h1> Style & Dimensions Lab</h1>
-      <p class="subtitle">Master jQuery CSS manipulation and box model dimensions</p>
-    </header>
 
-    <nav>
-      <a href="index.html">Dashboard</a>
-      <a href="selectors.html">Selectors</a>
-      <a href="attributes.html">Attributes</a>
-      <a href="events.html">Events</a>
-      <a href="style.html" class="active">Style</a>
-      <a href="traversing.html">Traversing</a>
-      <a href="effects.html">Effects</a>
-    </nav>
+<h2>1. css()</h2>
+<div id="cssBox" class="box"></div>
 
-    <div class="grid">
-      <!-- CSS Manipulation -->
-      <div class="card">
-        <h3>1. css() Manipulation</h3>
-        <p>Get and set CSS properties directly.</p>
-        <div class="demo-area">
-          <div id="cssBox" style="width: 80px; height: 80px; background: var(--accent-primary); border-radius: 8px;">
-          </div>
-        </div>
-        <button id="btnGetCss">Get Color</button>
-        <button id="btnSetCss" class="secondary">Set Gradient</button>
-        <button id="btnMultiCss" class="secondary">Set Multi Style</button>
-      </div>
+<button id="getCss">Get Color</button>
+<button id="setCss">Set Color</button>
+<button id="multiCss">Multiple Style</button>
 
-      <!-- Dimensions -->
-      <div class="card">
-        <h3>2. width() & height()</h3>
-        <p>Basic element dimensions (excluding padding/borders).</p>
-        <div class="demo-area">
-          <div id="dimBox"
-            style="width: 100px; height: 100px; background: var(--accent-secondary); padding: 20px; border: 5px solid white;">
-            Box</div>
-        </div>
-        <button id="btnGetWidth">Width & Height</button>
-        <button id="btnSetWidth" class="secondary">Set Large</button>
-      </div>
+<hr>
 
-      <!-- Inner/Outer Dimensions -->
-      <div class="card">
-        <h3>3. Inner vs Outer Dimensions</h3>
-        <p>Include padding (Inner) or padding+border (Outer).</p>
-        <div id="dimLog" class="event-log">Dimension values will appear here...</div>
-        <button id="btnInner" style="width: 48%;">Inner Metrics</button>
-        <button id="btnOuter" class="secondary" style="width: 48%;">Outer Metrics</button>
-      </div>
+<h2>2. width() & height()</h2>
+<div id="dimBox">Box</div>
 
-      <!-- Offset & Position -->
-      <div class="card">
-        <h3>4. offset() vs position()</h3>
-        <p>Relative to document (Offset) vs relative to parent (Position).</p>
-        <div class="demo-area" style="position: relative;">
-          <div id="parentBox"
-            style="width: 200px; height: 100px; background: #334155; position: relative; padding: 10px;">
-            Parent
-            <div id="childBox"
-              style="width: 40px; height: 40px; background: var(--success); position: absolute; top: 20px; left: 20px; border-radius: 4px;">
-            </div>
-          </div>
-        </div>
-        <button id="btnPos">Check Positions</button>
-        <button id="btnMove" class="secondary">Move Offset</button>
-      </div>
+<button id="getWH">Get Size</button>
+<button id="setWH">Set Size</button>
 
-      <!-- Scroll Top/Left -->
-      <div class="card">
-        <h3>5. scrollTop() & scrollLeft()</h3>
-        <p>Manage scroll positions of elements or the window.</p>
-        <div class="demo-area" id="scrollContainer"
-          style="width: 100%; height: 100px; overflow: scroll; border: 1px solid var(--border-color);">
-          <div
-            style="width: 500px; height: 500px; background: linear-gradient(45deg, #0f172a, #38bdf8); padding: 100px;">
-            Scroll me down and right!
-          </div>
-        </div>
-        <button id="btnScrollTop">Scroll to Top</button>
-        <button id="btnCheckScroll" class="secondary">Check Scroll</button>
-      </div>
-    </div>
-  </div>
+<hr>
 
-  <script>
-    $(document).ready(function () {
-      // 1. CSS
-      $("#btnGetCss").click(function () {
-        alert("Background Color: " + $("#cssBox").css("background-color"));
-      });
-      $("#btnSetCss").click(function () {
-        $("#cssBox").css("background", "linear-gradient(to right, #38bdf8, var(--success))");
-      });
-      $("#btnMultiCss").click(function () {
-        $("#cssBox").css({
-          "border": "3px solid white",
-          "box-shadow": "0 0 20px rgba(56,189,248,0.5)",
-          "transform": "rotate(45deg)"
-        });
-      });
+<h2>3. innerWidth() & outerWidth()</h2>
+<div id="log">Logs...</div>
 
-      // 2. Dimensions
-      $("#btnGetWidth").click(function () {
-        var w = $("#dimBox").width();
-        var h = $("#dimBox").height();
-        alert("Width: " + w + "px\nHeight: " + h + "px");
-      });
-      $("#btnSetWidth").click(function () {
-        $("#dimBox").width(150).height(150);
-      });
+<button id="innerBtn">Inner</button>
+<button id="outerBtn">Outer</button>
 
-      // 3. Inner/Outer
-      $("#btnInner").click(function () {
-        var iw = $("#dimBox").innerWidth();
-        var ih = $("#dimBox").innerHeight();
-        $("#dimLog").prepend("<div><span class='time'>[Inner]</span> Width (w/ Padding): " + iw + "px, Height: " + ih + "px</div>");
-      });
-      $("#btnOuter").click(function () {
-        var ow = $("#dimBox").outerWidth();
-        var oh = $("#dimBox").outerHeight();
-        $("#dimLog").prepend("<div><span class='time'>[Outer]</span> Width (w/ Border): " + ow + "px, Height: " + oh + "px</div>");
-      });
+<hr>
 
-      // 4. Position
-      $("#btnPos").click(function () {
-        var off = $("#childBox").offset();
-        var pos = $("#childBox").position();
-        alert("Offset (Doc): Top " + off.top + ", Left " + off.left + "\nPosition (Parent): Top " + pos.top + ", Left " + pos.left);
-      });
-      $("#btnMove").click(function () {
-        $("#childBox").offset({ top: 500, left: 100 }); // setting absolute doc pos
-      });
+<h2>4. offset() & position()</h2>
+<div id="parentBox">
+  Parent
+  <div id="childBox"></div>
+</div>
 
-      // 5. Scroll
-      $("#btnScrollTop").click(function () {
-        $("#scrollContainer").scrollTop(0).scrollLeft(0);
-      });
-      $("#btnCheckScroll").click(function () {
-        var sTop = $("#scrollContainer").scrollTop();
-        var sLeft = $("#scrollContainer").scrollLeft();
-        alert("Scroll Top: " + sTop + "px\nScroll Left: " + sLeft + "px");
-      });
+<button id="getPos">Check Position</button>
+<button id="move">Move</button>
+
+<hr>
+
+<h2>5. scrollTop() & scrollLeft()</h2>
+<div id="scrollBox">
+  <div id="bigContent">Scroll inside me</div>
+</div>
+
+<button id="scrollTopBtn">Go Top</button>
+<button id="checkScroll">Check Scroll</button>
+
+<script>
+$(document).ready(function(){
+
+  // 1. CSS
+  $("#getCss").click(function(){
+    alert($("#cssBox").css("background-color"));
+  });
+
+  $("#setCss").click(function(){
+    $("#cssBox").css("background","red");
+  });
+
+  $("#multiCss").click(function(){
+    $("#cssBox").css({
+      "border":"3px solid black",
+      "transform":"rotate(30deg)"
     });
-  </script>
-</body>
+  });
 
+  // 2. width height
+  $("#getWH").click(function(){
+    alert("Width: " + $("#dimBox").width() +
+          "\nHeight: " + $("#dimBox").height());
+  });
+
+  $("#setWH").click(function(){
+    $("#dimBox").width(150).height(150);
+  });
+
+  // 3. inner outer
+  $("#innerBtn").click(function(){
+    let w = $("#dimBox").innerWidth();
+    let h = $("#dimBox").innerHeight();
+    $("#log").prepend("<div>Inner: " + w + " x " + h + "</div>");
+  });
+
+  $("#outerBtn").click(function(){
+    let w = $("#dimBox").outerWidth();
+    let h = $("#dimBox").outerHeight();
+    $("#log").prepend("<div>Outer: " + w + " x " + h + "</div>");
+  });
+
+  // 4. position
+  $("#getPos").click(function(){
+    let off = $("#childBox").offset();
+    let pos = $("#childBox").position();
+
+    alert("Offset: " + off.top + "," + off.left +
+          "\nPosition: " + pos.top + "," + pos.left);
+  });
+
+  $("#move").click(function(){
+    $("#childBox").offset({top:300,left:100});
+  });
+
+  // 5. scroll
+  $("#scrollTopBtn").click(function(){
+    $("#scrollBox").scrollTop(0).scrollLeft(0);
+  });
+
+  $("#checkScroll").click(function(){
+    alert("Top: " + $("#scrollBox").scrollTop() +
+          "\nLeft: " + $("#scrollBox").scrollLeft());
+  });
+
+});
+</script>
+
+</body>
 </html>
