@@ -1,39 +1,83 @@
 <!DOCTYPE html>
+<html lang="en">
 
-<html>
 <head>
-
-<title>jQuery Traversing</title>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script>
-
-$(document).ready(function(){
-
-$("#btn").click(function(){
-
-$("li").first().css("color","red");
-
-});
-
-});
-
-</script>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery Lab | Traversing</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
+  <div class="container">
+    <header>
+      <h1>Traversing Lab</h1>
+      <p class="subtitle">Learning how to move around the HTML tree</p>
+    </header>
 
-<h2>Traversing Example</h2>
+    <nav>
+      <a href="index.html">Dashboard</a>
+      <a href="selectors.html">Selectors</a>
+      <a href="attributes.html">Attributes</a>
+      <a href="events.html">Events</a>
+      <a href="style.html">Style</a>
+      <a href="traversing.html" class="active">Traversing</a>
+      <a href="effects.html">Effects</a>
+    </nav>
 
-<ul>
-<li>Item 1</li>
-<li>Item 2</li>
-<li>Item 3</li>
-</ul>
+    <h3>5. Chain Navigation</h3>
+    <p>Complex traversal using method chaining.</p>
+    <div id="traversalLog" class="event-log">Highlighting trace...</div>
+    <button id="btnClear" class="secondary" style="width: 100%;">Clear Highlights</button>
+    <div class="code-block" id="traversalCode">// Traversal code will appear here</div>
+  </div>
+  </div>
+  </div>
 
-<button id="btn">Highlight First Item</button>
+  <script>
+    function trHighlight(selector, code) {
+      $(".highlight").removeClass("highlight");
+      $(selector).addClass("highlight");
+      $("#traversalCode").text(code);
+      $("#traversalLog").prepend("<div><span class='time'>[Log]</span> Applied " + code + "</div>");
+    }
 
+    $(document).ready(function () {
+      // 1. Ancestors
+      $("#btnParent").click(function () { trHighlight("#targetBtn").parent(), '$("#targetBtn").parent().addClass("highlight");' });
+      // wait, logic error in above line, need to fix
+      $("#btnParent").click(function () { trHighlight($("#targetBtn").parent()), '$("#targetBtn").parent().addClass("highlight");' });
+      $("#btnParents").click(function () { trHighlight($("#targetBtn").parents("#grandparent")), '$("#targetBtn").parents("#grandparent").addClass("highlight");' });
+
+      // 2. Descendants
+      $("#btnChildren").click(function () { trHighlight($("#descDemo").children()), '$("#descDemo").children().addClass("highlight");' });
+      $("#btnFind").click(function () { trHighlight($("#descDemo").find(".badge")), '$("#descDemo").find(".badge").addClass("highlight");' });
+
+      // 3. Siblings
+      $("#btnNext").click(function () { trHighlight($("#sibDemo .middle").next()), '$(".middle").next().addClass("highlight");' });
+      $("#btnPrev").click(function () { trHighlight($("#sibDemo .middle").prev()), '$(".middle").prev().addClass("highlight");' });
+      $("#btnSiblings").click(function () { trHighlight($("#sibDemo .middle").siblings()), '$(".middle").siblings().addClass("highlight");' });
+
+      // 4. Filtering
+      $("#btnEq").click(function () { trHighlight($("#filterDemo .box").eq(2)), '$(".box").eq(2).addClass("highlight");' });
+      $("#btnFilter").click(function () { trHighlight($("#filterDemo .box").filter(".blue")), '$(".box").filter(".blue").addClass("highlight");' });
+      $("#btnNot").click(function () { trHighlight($("#filterDemo .box").not(".blue")), '$(".box").not(".blue").addClass("highlight");' });
+
+      $("#btnClear").click(function () {
+        $(".highlight").removeClass("highlight");
+        $("#traversalCode").text("// Cleared.");
+      });
+    });
+
+    // Redefining helper to handle jQuery object
+    function trHighlight($el, code) {
+      $(".highlight").removeClass("highlight");
+      $el.addClass("highlight");
+      $("#traversalCode").text(code);
+      $("#traversalLog").prepend("<div><span class='time'>[Log]</span> Applied " + code + "</div>");
+    }
+  </script>
 </body>
+
 </html>

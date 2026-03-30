@@ -1,39 +1,142 @@
 <!DOCTYPE html>
+<html lang="en">
 
-<html>
 <head>
-
-<title>jQuery Effects</title>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script>
-
-$(document).ready(function(){
-
-$("#fadeBtn").click(function(){
-$("#box").fadeToggle();
-});
-
-$("#slideBtn").click(function(){
-$("#box").slideToggle();
-});
-
-});
-
-</script>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery Lab | Effects</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
+  <div class="container">
+    <header>
+      <h1> Effects Lab</h1>
+      <p class="subtitle">Master jQuery animations and visual transitions</p>
+    </header>
 
-<h2>Effects Example</h2>
+    <nav>
+      <a href="index.html">Dashboard</a>
+      <a href="selectors.html">Selectors</a>
+      <a href="attributes.html">Attributes</a>
+      <a href="events.html">Events</a>
+      <a href="style.html">Style</a>
+      <a href="traversing.html">Traversing</a>
+      <a href="effects.html" class="active">Effects</a>
+    </nav>
 
-<button id="fadeBtn">Fade Toggle</button> <button id="slideBtn">Slide Toggle</button>
+    <div class="grid">
+      <!-- Show, Hide, Toggle -->
+      <div class="card">
+        <h3>1. Show, Hide & Toggle</h3>
+        <p>Basic visibility control with optional speed (ms).</p>
+        <div class="demo-area">
+          <div id="basicBox"
+            style="width: 100px; height: 100px; background: var(--accent-primary); border-radius: 8px;"></div>
+        </div>
+        <button id="btnHide">Hide</button>
+        <button id="btnShow" class="secondary">Show</button>
+        <button id="btnTog" class="secondary">Toggle</button>
+      </div>
 
-<div id="box" style="width:200px;height:200px;background:red;">
-Box
-</div>
+      <!-- Fade In, Out, Toggle -->
+      <div class="card">
+        <h3>2. Fade Effects</h3>
+        <p>Modify opacity for smooth transitions.</p>
+        <div class="demo-area">
+          <div id="fadeBox"
+            style="width: 100px; height: 100px; background: var(--accent-secondary); border-radius: 8px;"></div>
+        </div>
+        <button id="btnFadeOut">Fade Out</button>
+        <button id="btnFadeIn" class="secondary">Fade In</button>
+        <button id="btnFadeTog" class="secondary">Fade Toggle</button>
+      </div>
 
+      <!-- Slide Up, Down, Toggle -->
+      <div class="card">
+        <h3>3. Slide Effects</h3>
+        <p>Vertically expand or collapse elements.</p>
+        <div class="demo-area" style="padding: 0;">
+          <div id="slideBox"
+            style="width: 100%; height: 100px; background: #334155; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+            Content Area</div>
+        </div>
+        <button id="btnSlideUp">Slide Up</button>
+        <button id="btnSlideDown" class="secondary">Slide Down</button>
+        <button id="btnSlideTog" class="secondary">Slide Toggle</button>
+      </div>
+
+      <!-- Custom Animation -->
+      <div class="card">
+        <h3>4. Custom animate()</h3>
+        <p>Animate CSS properties like width, height, and margins.</p>
+        <div class="demo-area">
+          <div id="animBox"
+            style="width: 50px; height: 50px; background: var(--success); border-radius: 50%; position: absolute; left: 10px;">
+          </div>
+        </div>
+        <button id="btnAnim">Start Animation</button>
+        <button id="btnAnimReset" class="secondary">Reset</button>
+      </div>
+
+      <!-- Stop, Delay, Finish -->
+      <div class="card">
+        <h3>5. Animation Control</h3>
+        <p>Manage the animation queue with <code>stop()</code>, <code>delay()</code>, and <code>finish()</code>.</p>
+        <div class="demo-area">
+          <div id="controlBox" style="width: 60px; height: 60px; background: var(--danger); border-radius: 8px;"></div>
+        </div>
+        <button id="btnChain">Chain Seq</button>
+        <button id="btnStop" class="danger">Stop</button>
+        <button id="btnDelay" class="secondary">Delay 1s</button>
+        <button id="btnFinish">Finish</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      // 1. Basic
+      $("#btnHide").click(function () { $("#basicBox").hide(500); });
+      $("#btnShow").click(function () { $("#basicBox").show(500); });
+      $("#btnTog").click(function () { $("#basicBox").toggle(500); });
+
+      // 2. Fade
+      $("#btnFadeOut").click(function () { $("#fadeBox").fadeOut(800); });
+      $("#btnFadeIn").click(function () { $("#fadeBox").fadeIn(800); });
+      $("#btnFadeTog").click(function () { $("#fadeBox").fadeToggle(800); });
+
+      // 3. Slide
+      $("#btnSlideUp").click(function () { $("#slideBox").slideUp(600); });
+      $("#btnSlideDown").click(function () { $("#slideBox").slideDown(600); });
+      $("#btnSlideTog").click(function () { $("#slideBox").slideToggle(600); });
+
+      // 4. Custom Animate
+      $("#btnAnim").click(function () {
+        $("#animBox").animate({ left: '+=200px', width: '80px', height: '80px' }, 1000)
+          .animate({ top: '+=20px' }, 500)
+          .animate({ left: '-=100px', opacity: 0.5 }, 1000);
+      });
+      $("#btnAnimReset").click(function () {
+        $("#animBox").stop(true, true).css({ left: '10px', top: 'unset', width: '50px', height: '50px', opacity: 1 });
+      });
+
+      // 5. control
+      $("#btnChain").click(function () {
+        $("#controlBox").slideUp(1000).slideDown(1000).fadeOut(1000).fadeIn(1000);
+      });
+      $("#btnStop").click(function () {
+        $("#controlBox").stop(true, false); // stop current, clear queue
+      });
+      $("#btnDelay").click(function () {
+        $("#controlBox").delay(1000).fadeOut(1000).fadeIn(500);
+      });
+      $("#btnFinish").click(function () {
+        $("#controlBox").finish(); // jumps to end of all animations
+      });
+    });
+  </script>
 </body>
+
 </html>

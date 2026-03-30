@@ -1,38 +1,85 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-
-<title>jQuery Lab</title>
-
-<link rel="stylesheet" href="styles.css">
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script src="script.js"></script>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery Lab | Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-
 <body>
+  <div class="container">
+    <header>
+      <h1>jQuery Lab Demo</h1>
+      <p class="subtitle">A comprehensive interactive suite for mastering jQuery essentials</p>
+    </header>
 
-<h1>jQuery Lab Experiments</h1>
+    <nav>
+      <a href="index.html" class="active">Dashboard</a>
+      <a href="selectors.html">Selectors</a>
+      <a href="attributes.html">Attributes</a>
+      <a href="events.html">Events</a>
+      <a href="style.html">Style</a>
+      <a href="traversing.html">Traversing</a>
+      <a href="effects.html">Effects</a>
+    </nav>
 
-<nav>
-<a href="selectors.html">Selectors</a>
-<a href="attributes.html">Attributes</a>
-<a href="events.html">Events</a>
-<a href="style.html">Style</a>
-<a href="traversing.html">Traversing</a>
-<a href="effects.html">Effects</a>
-</nav>
+    <div class="grid">
+      <div class="card">
+        <h3>Selectors</h3>
+        <p>Explore the power of jQuery selectors to target any element in the DOM with ease.</p>
+        <button onclick="location.href='selectors.html'">Explore Selectors</button>
+      </div>
 
-<h2>Main Demo</h2>
+      <div class="card">
+        <h3>Attributes</h3>
+        <p>Manipulate HTML attributes, classes, and values dynamically to change state and content.</p>
+        <button onclick="location.href='attributes.html'">Explore Attributes</button>
+      </div>
 
-<button id="hideBtn">Hide</button> <button id="showBtn">Show</button>
+      <div class="card">
+        <h3>Events</h3>
+        <p>Handle user interactions like clicks, hovers, and keyboard inputs with ease.</p>
+        <button onclick="location.href='events.html'">Explore Events</button>
+      </div>
 
-<div id="box">
-Hello jQuery
-</div>
+      <div class="card">
+        <h3> Style & CSS</h3>
+        <p>Modify styles and dimensions on the fly to create dynamic layouts.</p>
+        <button onclick="location.href='style.html'">Explore Style</button>
+      </div>
 
+      <div class="card">
+        <h3> Traversing</h3>
+        <p>Navigate the DOM tree like a pro using parent, child, and sibling traversal.</p>
+        <button onclick="location.href='traversing.html'">Explore Traversing</button>
+      </div>
+
+      <div class="card">
+        <h3> Effects</h3>
+        <p>Bring your UI to life with fades, slides, and custom animations.</p>
+        <button onclick="location.href='effects.html'">Explore Effects</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 2rem;">
+      <h3> Quick Demo</h3>
+      <div class="demo-area">
+        <div id="target-box">jQuery</div>
+      </div>
+      <button id="demoBtn">Pulse Animation</button>
+     
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      $("#demoBtn").click(function() {
+        $("#target-box")
+          .animate({ width: "150px", height: "150px", fontSize: "2rem" }, 500)
+          .animate({ width: "100px", height: "100px", fontSize: "1rem" }, 500);
+      });
+    });
+  </script>
 </body>
 </html>

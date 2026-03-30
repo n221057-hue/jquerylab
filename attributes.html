@@ -1,104 +1,149 @@
 <!DOCTYPE html>
+<html lang="en">
 
-<html>
 <head>
-<title>jQuery Attributes Example</title>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script>
-
-$(document).ready(function(){
-
-// Set attribute
-$("#setAttr").click(function(){
-$("#img").attr("src","biolink (1).svg");
-});
-
-// Get attribute
-$("#getAttr").click(function(){
-alert($("#img").attr("src"));
-});
-
-// Remove attribute
-$("#removeAttr").click(function(){
-$("#img").removeAttr("title");
-});
-
-// Get input value
-$("#getVal").click(function(){
-alert($("#name").val());
-});
-
-// Set input value
-$("#setVal").click(function(){
-$("#name").val("Student Name");
-});
-
-// Change text
-$("#changeText").click(function(){
-$("#text").text("Text changed using jQuery");
-});
-
-// Change HTML
-$("#changeHTML").click(function(){
-$("#html").html("<b>Bold text added</b>");
-});
-
-});
-
-</script>
-
-<style>
-
-body{
-font-family:Arial;
-text-align:center;
-}
-
-img{
-margin:10px;
-}
-
-button{
-margin:5px;
-padding:8px;
-}
-
-</style>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery Lab | Attributes</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
+  <div class="container">
+    <header>
+      <h1>Attributes Lab</h1>
+      <p class="subtitle">Master jQuery attribute and property manipulation</p>
+    </header>
 
-<h2>jQuery Attributes Example</h2>
+    <nav>
+      <a href="index.html">Dashboard</a>
+      <a href="selectors.html">Selectors</a>
+      <a href="attributes.html" class="active">Attributes</a>
+      <a href="events.html">Events</a>
+      <a href="style.html">Style</a>
+      <a href="traversing.html">Traversing</a>
+      <a href="effects.html">Effects</a>
+    </nav>
 
-<h3>Image Attribute</h3>
+    <div class="grid">
+      <!-- Attr & RemoveAttr -->
+      <div class="card">
+        <h3>1. attr() & removeAttr()</h3>
+        <p>Manipulate HTML attributes like <code>src</code>, <code>title</code>, and <code>alt</code>.</p>
+        <div class="demo-area">
+          <img id="demoImg" src="asda.svg" alt="Sample" style="width: 80px; height: 80px;" title="Original Title">
+        </div>
+        <button id="btnSetAttr">Change Alt</button>
+        <button id="btnGetAttr" class="secondary">Get Title</button>
+        <button id="btnRemAttr" class="danger">Remove Title</button>
+      </div>
 
-<img id="img" src="asda.svg" title="Sample Image">
+      <!-- Val() -->
+      <div class="card">
+        <h3>2. val()</h3>
+        <p>Get and set values for form elements like inputs, selects, and textareas.</p>
+        <div class="demo-area">
+          <input type="text" id="demoInput" placeholder="Type something..." style="width: 80%;">
+          <select id="demoSelect" style="width: 80%;">
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+          </select>
+        </div>
+        <button id="btnGetVal">Show Value</button>
+        <button id="btnSetVal" class="secondary">Set 'Hello!'</button>
+      </div>
 
-<br>
+      <!-- addClass, removeClass, toggleClass -->
+      <div class="card">
+        <h3>3. Class Manipulation</h3>
+        <p>Dynamically add, remove, or toggle CSS classes.</p>
+        <div class="demo-area">
+          <div id="classBox" style="width: 80px; height: 80px; background: #475569; border-radius: 8px;"></div>
+        </div>
+        <button id="btnAddClass">Add Highlight</button>
+        <button id="btnRemClass" class="danger">Remove</button>
+        <button id="btnTogClass" class="secondary">Toggle</button>
+      </div>
 
-<button id="setAttr">Change Image</button> <button id="getAttr">Get Image Source</button> <button id="removeAttr">Remove Title</button>
+      <!-- Prop vs Attr -->
+      <div class="card">
+        <h3>4. prop()</h3>
+        <p>Manipulate properties (e.g., <code>checked</code>, <code>disabled</code>) vs attributes.</p>
+        <div class="demo-area">
+          <label><input type="checkbox" id="demoCheck"> Disable Input Below</label>
+          <input type="text" id="propInput" placeholder="I'll be disabled" style="width: 80%; margin-top: 10px;">
+        </div>
+        <button id="btnCheckProp">Check Status</button>
+        <button id="btnTogProp" class="secondary">Toggle Disabled</button>
+      </div>
 
-<hr>
+      <!-- HTML vs Text -->
+      <div class="card">
+        <h3>5. html() & text()</h3>
+        <p>Update inner content as raw text or HTML structure.</p>
+        <div class="demo-area">
+          <div id="contentDiv" style="border: 1px solid var(--border-color); padding: 5px; width: 90%;">Initial Content
+          </div>
+        </div>
+        <button id="btnHtml">Set HTML</button>
+        <button id="btnText" class="secondary">Set Text</button>
+      </div>
+    </div>
+  </div>
 
-<h3>Input Value</h3>
+  <script>
+    $(document).ready(function () {
+      // 1. Attr
+      $("#btnSetAttr").click(function () {
+        $("#demoImg").attr("alt", "Updated Alt Text");
+        alert("Alt attribute changed to: " + $("#demoImg").attr("alt"));
+      });
+      $("#btnGetAttr").click(function () {
+        alert("Title attribute is: " + ($("#demoImg").attr("title") || "None"));
+      });
+      $("#btnRemAttr").click(function () {
+        $("#demoImg").removeAttr("title");
+        alert("Title attribute removed!");
+      });
 
-<input type="text" id="name" placeholder="Enter name">
+      // 2. Val
+      $("#btnGetVal").click(function () {
+        alert("Input: " + $("#demoInput").val() + "\nSelect: " + $("#demoSelect").val());
+      });
+      $("#btnSetVal").click(function () {
+        $("#demoInput").val("Hello jQuery!");
+      });
 
-<br><br>
+      // 3. Classes
+      $("#btnAddClass").click(function () {
+        $("#classBox").addClass("highlight");
+      });
+      $("#btnRemClass").click(function () {
+        $("#classBox").removeClass("highlight");
+      });
+      $("#btnTogClass").click(function () {
+        $("#classBox").toggleClass("highlight");
+      });
 
-<button id="getVal">Get Value</button> <button id="setVal">Set Value</button>
+      // 4. Prop
+      $("#btnCheckProp").click(function () {
+        alert("Checkbox Checked: " + $("#demoCheck").prop("checked") + "\nInput Disabled: " + $("#propInput").prop("disabled"));
+      });
+      $("#btnTogProp").click(function () {
+        var status = $("#propInput").prop("disabled");
+        $("#propInput").prop("disabled", !status);
+      });
 
-<hr>
-
-<h3>Text and HTML</h3>
-
-<p id="text">Original Text</p>
-<p id="html">Original HTML</p>
-
-<button id="changeText">Change Text</button> <button id="changeHTML">Change HTML</button>
-
+      // 5. HTML/Text
+      $("#btnHtml").click(function () {
+        $("#contentDiv").html("<strong>Strong HTML</strong> content");
+      });
+      $("#btnText").click(function () {
+        $("#contentDiv").text("Plain text: <strong>No HTML tags here</strong>");
+      });
+    });
+  </script>
 </body>
+
 </html>
